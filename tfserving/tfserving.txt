@@ -1,0 +1,54 @@
+# 安装 tfserving
+#1、添加 TensorFlow Serving 分发 URI 所谓包的安装源 (一次性设置)  （version>unbuntu1.17版本）
+echo "deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal" | sudo tee /etc/apt/sources.list.d/tensorflow-serving.list curl https://storage.googleapis.com/tensorflow-serving-apt/tensorflow-serving.release.pub.gpg | sudo apt-key add -
+
+#2、安装和更新 TensorFlow ModelServer
+sudo apt-get update && sudo apt-get install tensorflow-model-server
+
+#3、安装相应依赖
+sudo pip install -y \
+        build-essential \
+        curl \
+        libcurl3-dev \
+        git \
+        libfreetype6-dev \
+        libpng12-dev \
+        libzmq3-dev \
+        pkg-config \
+        python-dev \
+        python-numpy \
+        python-pip \
+        software-properties-common \
+        swig \
+        zip \
+
+#4、安装TensorFlow Serving Python API PIP package
+pip install tensorflow-serving-api
+
+#5、安装images
+docker pull tensorflow/serving:latest
+# 根据项目不同的需求安装对应的版本
+#	 :version(2.2.0)
+#	 :latest：安装TensorFlow Serving二进制文件的最小镜像。
+#	 :latest-gpu：安装了TensorFlow Serving二进制文件并可以在GPU上使用的最小镜像。
+#	 :latest-devel -包括要开发的所有源/依赖项/工具链，以及在CPU上运行的已编译二进制文件
+#	 :latest-devel-gpu -包括要开发的所有源代码依赖项/工具链（cuda9 / cudnn7），以及可在NVIDIA GPU上运行的已编译二进制文件。
+
+
+# 6、配置model yaml档案
+# 详情见 tftest.yaml
+# 路径： ～/Downloads
+
+# 7、运行
+kubectl apply -f tftest.yaml
+
+#8、查看详情
+kubectl -n kubeflow get all
+
+#9、查看部署情况 （mnist-v1...， 每次部署都会随机生成一个后缀，具体名称kubectl -n kubeflow get all）
+kubectl -n kubeflow logs mnist-v1-...
+kubectl get deploy -n mnist-v1
+#10、调用
+i：curl -d '{"instances": [1.0,2.0,5.0]}' -X POST http://localhost:30085/v1/models/mnist:predict
+ii： requests.post(http://localhost:30085/v1/models/object:predict', data=data, headers=headers)
+

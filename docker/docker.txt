@@ -1,0 +1,39 @@
+有了Dockerfile，创建镜像
+docker build -t 192.168.1.1:5000/validate:v1 .
+sudo docker build -t yanqin/strtolist:v1 .
+sudo docker push yanqin/strtolist:v1
+创建容器
+docker run -itd --name=tomcate -p 8080:8080 \
+    -v /app/webapps/:/usr/local/apache-tomcat-8.0.46/webapps/ \
+    tomcat:v1
+
+
+配置私有仓库
+sudo  vim /etc/docker/daemon.json
+{
+  "insecure-registries" : ["192.168.1.1:5000"]
+}
+重新启动docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+
+docker push 192.168.1.1:5000/strtolist:v1
+
+sudo docker rmi 49861c071c98
+sudo docker rmi c5b148bb20f9
+sudo docker rmi f3b01ea81ec1
+sudo docker rmi 1b0a9ab3192a
+sudo docker rmi 9f9c35922c01
+sudo docker rmi 6d279532289c
+
+sudo docker rmi 7efa3d522124
+sudo docker rmi 843cf9da1489
+sudo docker rmi 27438c4b8bdd
+25dee1287898
+
+sudo docker rm 9b4c587e53b8
+sudo docker rm a84565fd1baa
+sudo docker rm 9c39dbf2469e
+sudo docker rm 2b38b429b219
+sudo docker rm 0f8d5d1962ca

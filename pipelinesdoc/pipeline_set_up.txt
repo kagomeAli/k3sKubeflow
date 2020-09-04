@@ -1,0 +1,87 @@
+# 1、 安装pipelines SDK
+pip install https://storage.googleapis.com/ml-pipeline/release/0.1.20/kfp.tar.gz --upgrade
+# 2、 检查一下安装成功了没
+which dsl-compile
+# 3、 编译需要上传的pipeline.py文件
+dsl-compile --py dslT.py --output pipelines_test.tgz
+or
+kfp.compiler.Compiler().compile(my_pipeline,'my-pipeline.zip')
+
+在流水线中，由输入输出关系会确定图上的边以及方向
+
+
+dsl.function 详解
+1、dsl.Condition
+描述：判断 输入参数是否与目标参数 匹配，
+输入参数：   condition (ConditionOperator / none) – 匹配 条件.
+           name (str / require) – 条件的名称
+
+返回值:     true （执行附属代码块）
+           false (结束)
+案例:
+           with Condition(param1=='pizza', '[param1 is pizza]'):
+             op1 = ContainerOp(...)
+             op2 = ContainerOp(...)
+
+2、dsl.ContainerOp
+描述：将 images代码块 生成可执行的container，
+输入参数：   name (str / require) – 此 代码块 名称.
+           image (str / require) - 接收 images
+           arguments (list / none) – images 接收参数
+           file_outputs(dict / none) - 将输出名称映射到容器本地输出文件路径,file_outputs映射中的每个输出，在task.outputs词典中将有一个对应的输出引用
+           pvolumes (str / none) - 引用的 PV
+           sidecars  (list / none) - 与主容器一起部署的Sidecar容器的Sidecar对象列表
+           init_containers (list / none) - 在主容器之前部署的InitContainer的UserContainer对象列表
+           container_kwargs (dict / none ) - 容器的其他参数值
+
+返回值:     pipelines component 对象
+
+案例:       dsl.ContainerOp（
+                 name='validate_number',
+                 image='validate:v1',
+                 arguments = [
+                       '--inputFilename', inputFilename,
+                       '--output_dir', output_dir,
+                   ],
+                 file_outputs={
+                       'more': '/moreFilePath.txt',
+                       'less': '/lessFilePath.txt',
+                       }
+                 init_containers=[dsl.UserContainer('print', 'busybox:latest', command='echo "hello"')],
+                 sidecars=[dsl.Sidecar('print', 'busybox:latest', command='echo "hello"')],
+                 container_kwargs={'env': [V1EnvVar('foo', 'bar')]},
+
+           ）
+
+3、dsl.ExitHandler(exit_op：ContainerOp)
+描述：监听 ContainerOp 运行状态， 完成时 执行相关代码块
+
+输入参数：   exit_op (ConditionOperator / require) – dsl.ContainerOp
+           ValueError (boolean / none) – 若接收一个 无效exit_op ，则忽略
+           （若接受无效的 exit_op，但无 ValueError： true, 会报错）
+
+返回值:     addListenEvent (监听事件)
+案例:
+           exit_op = dsl.ContainerOp(...)
+           with dsl.ExitHandler(exit_op):
+             op1 = dsl.ContainerOp(...)
+             op2 = dsl.ContainerOp(...)
+
+4、dsl.ParallelFor(list)
+
+描述：对一个静态值(数组)进行for 循环
+
+输入参数：   list (List / require) – 静态列表
+
+案例:
+           with dsl.ParallelFor([{'a': 1, 'b': 10}, {'a': 2, 'b': 20}]) as item:
+             op1 = ContainerOp(..., args=['echo {}'.format(item.a)])
+             op2 = ContainerOp(..., args=['echo {}'.format(item.b])
+
+
+
+案例
+source code：~/Downloads/pipelines/nfsdata/condition.py
+pipelines：dslDocker1
+experiment：dslDocker1_version_at_2020-08-24T08:11:30.775Z (31002)
+

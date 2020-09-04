@@ -1,0 +1,25 @@
+#创建服务
+sudo docker run -d --name serving_yanqin_test emacski/tensorflow-serving:2.2.0-linux_arm
+emacski/tensorflow-serving:latest-debug-linux_arm
+
+sudo docker run -ti --entrypoint /tmp/resnet emacski/tensorflow-serving:2.2.0-linux_arm
+sudo docker run -ti --entrypoint sh emacski/tensorflow-serving:2.2.0-linux_arm
+
+docker run -d --name serving_base emacski/tensorflow-serving:2.2.0-linux_arm
+#将ResNet模型数据复制到容器的模型文件夹中：
+sudo docker cp /home/nvidia/Downloads/resnet serving_base:/models/resnet
+sudo docker cp /home/nvidia/Downloads/resnet 2da27f936354:/models/resnet
+
+9e2b23da1835d3bfbc42fc2b0615531a69460bdbd9ef72d8f5baf8a3086acd81
+
+docker run -d --name serving_base emacski/tensorflow-serving
+
+
+docker commit --change "ENV MODEL_NAME resnet" serving_base resnet_serving
+
+resnet_serving
+
+
+sudo docker exec -it d5f4f5dad72e /bin/bash
+
+docker run -p 8500:8500 -t resnet_serving &

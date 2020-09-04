@@ -1,0 +1,32 @@
+FROM python:3.6-slim
+RUN mkdir -p /app
+ENV APP_HOME /app
+COPY src $APP_HOME
+WORKDIR $APP_HOME
+ENTRYPOINT ["python", "strtolist.py"]
+
+FROM python:3.6-slim
+RUN mkdir -p /app
+ENV APP_HOME /app
+COPY src $APP_HOME
+WORKDIR $APP_HOME
+ENTRYPOINT ["python", "LessThanZero.py"]
+
+ENTRYPOINT ["python", "MoreThanZero.py"]
+ENTRYPOINT ["python", "validate.py"]
+
+
+
+sudo docker build -t yanqin/validate:v1 .
+sudo docker push yanqin/validate:v1
+
+
+ENTRYPOINT ["python", "validate.py"]
+
+ENTRYPOINT ["python", "strtolist.py"]
+
+ENTRYPOINT ["python", "LessThanZero.py"]
+
+ENTRYPOINT ["python", "MoreThanZero.py"]
+
+ENTRYPOINT ["python", "SumNumber.py"]

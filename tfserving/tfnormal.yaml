@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tesstmodel
+  name: tesstmodel-service
+  namespace: kubeflow
+spec:
+  ports:
+  - name: grpc-tf-serving
+    port: 9000
+    targetPort: 9000
+    nodePort: 30009
+  - name: http-tf-serving
+    port: 8500
+    targetPort: 8500
+    nodePort: 30085
+  selector:
+    app: tesstmodel
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tesstmodel
+  name: tesstmodel-v1
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app: tesstmodel
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: tesstmodel
+        version: v1
+    spec:
+      containers:
+      - args:
+        - --port=9000
+        - --rest_api_port=8500
+        - --model_name=tesstmodel
+        - --model_base_path=/mnt/1060dir/models/
+        command:
+        - /usr/bin/tensorflow_model_server
+        image: tensorflow/serving:1.11.1
+        ports:
+        - containerPort: 9000
+        - containerPort: 8500
+        resources:
+          limits:
+            cpu: "4"
+            memory: 4Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          tcpSocket:
+            port: 9000
+        name: tesstmodel
+        volumeMounts:
+        - mountPath: /1060dir
+          name: tf-volume
+      volumes:
+      - name: tf-volume
+        hostPath:
+          path: /mnt/1060dir
+          type: Directory
+      nodeSelector:
+        name: aoi1060
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  labels:
+  name: tesstmodel-service
+  namespace: kubeflow
+spec:
+  host: tesstmodel-service
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  labels:
+  name: tesstmodel-service
+  namespace: kubeflow
+spec:
+  gateways:
+  - kubeflow-gateway
+  hosts:
+  - '*'
+  http:
+  - match:
+    - method:
+        exact: POST
+      uri:
+        prefix: /tfserving/models/tesstmodel
+    rewrite:
+      uri: /v1/models/tesstmodel:predict
+    route:
+    - destination:
+        host: tesstmodel-service
+        port:
+          number: 8500
+        subset: v1
+      weight: 100

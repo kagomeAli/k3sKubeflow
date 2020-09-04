@@ -1,0 +1,36 @@
+def workflow1(
+  input_handle_eval: dsl.PipelineParam=dsl.PipelineParam(name='input-handle-eval',
+  value='gs://aju-dev-demos-codelabs/KF/taxidata/eval/data.csv'),
+  input_handle_train: dsl.PipelineParam=dsl.PipelineParam(
+      name='input-handle-train',
+      value='gs://aju-dev-demos-codelabs/KF/taxidata/train/data.csv'),
+  outfile_prefix_eval: dsl.PipelineParam=dsl.PipelineParam(
+      name='outfile-prefix-eval',
+      value='eval_transformed'),
+  outfile_prefix_train: dsl.PipelineParam=dsl.PipelineParam(
+      name='outfile-prefix-train',
+      value='train_transformed'),
+  train_steps: dsl.PipelineParam=dsl.PipelineParam(name='train-steps',
+      value=10000),
+  project: dsl.PipelineParam=dsl.PipelineParam(name='project',
+      value='YOUR_PROJECT_HERE'),
+  working_dir: dsl.PipelineParam=dsl.PipelineParam(name='working-dir',
+      value='YOUR_GCS_DIR_HERE'),
+  tft_setup_file: dsl.PipelineParam=dsl.PipelineParam(name='tft-setup-file',
+      value='/ml/transform/setup.py'),
+  tfma_setup_file: dsl.PipelineParam=dsl.PipelineParam(name='tfma-setup-file',
+      value='/ml/analysis/setup.py'),
+  workers: dsl.PipelineParam=dsl.PipelineParam(name='workers', value=0),
+  pss: dsl.PipelineParam=dsl.PipelineParam(name='pss', value=0),
+  max_rows: dsl.PipelineParam=dsl.PipelineParam(name='max-rows', value=10000),
+  ts1: dsl.PipelineParam=dsl.PipelineParam(name='ts1', value=''),
+  ts2: dsl.PipelineParam=dsl.PipelineParam(name='ts2', value=''),
+  preprocessing_module1: dsl.PipelineParam=dsl.PipelineParam(
+      name='preprocessing-module1',
+      value='gs://aju-dev-demos-codelabs/KF/taxi-preproc/preprocessing.py'),
+  preprocessing_module2: dsl.PipelineParam=dsl.PipelineParam(
+      name='preprocessing-module2',
+      value='gs://aju-dev-demos-codelabs/KF/taxi-preproc/preprocessing2.py'),
+  preprocess_mode: dsl.PipelineParam=dsl.PipelineParam(name='preprocess-mode',
+      value='local'),
+  tfma_mode: dsl.PipelineParam=dsl.PipelineParam(name='tfma-mode', value='local')):

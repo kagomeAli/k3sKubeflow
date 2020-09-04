@@ -1,0 +1,56 @@
+# apiVersion：此处值是v1，这个版本号需要根据安装的Kubernetes版本和资源类型进行变化，记住不是写死的。
+# kind：此处创建的是Pod，根据实际情况，此处资源类型可以是Deployment、Job、Ingress、Service等。
+kubectl api-versions
+kubectl version
+
+1.17
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.16.0/cert-manager.yaml
+
+3330428
+772459110
+
+# 查看pod状态
+kubectl logs kfserving-controller-manager-0 -n kfserving-system
+kubectl -n kubeflow \\\\\\
+
+# 查看服务
+kubectl get services
+
+curl -v http://localhost:8080/v1/models/flowers-sample:predict -d $INPUT_PATH
+http://localhost:8080/v1/models/flowers-sample:predict
+
+查看资源：
+kubectl -n kubeflow get all
+
+kubectl get inferenceservice
+
+
+kfserving-test
+kubectl -n kubeflow edit deploy mnist-v1
+
+kubectl delete pod kfserving-controller-manager-0 -n kubeflow
+
+kubectl -n kubeflow describe testpipelines-pkq7q-3982610229
+
+kubectl describe pods nfs-pvc-test-cbf747d44-m7tb8
+
+
+pod/nfs-pvc-test-cbf747d44-75tsv                           Terminating   0          5h13m
+pod/nfs-pvc-test-cbf747d44-lpsr9                           Terminating   0          5h13m
+pod/nfs-pvc-test-cbf747d44-m7tb8
+
+kubectl delete pods testpipelines-w7xcq-3846656937 --grace-period=0 --force
+
+pod/testpipelines-pkq7q-3982610229
+
+kubectl logs kfserving-controller-manager-0 -n kfserving-system
+
+kubectl get pv
+kubectl get pvc
+
+
+
+
+
+
+kubectl delete pod conditional-execution-pipeline-vh79w-698046787 -n kubeflow

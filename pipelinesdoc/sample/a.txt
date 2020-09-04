@@ -1,0 +1,13 @@
+dsl.ContainerOp 表示由容器映像实现的管道任务（op）。
+dsl.PipelineParam表示可以从一个管道组件传递到另一个管道组件的管道参数。请参阅管道参数指南 。
+dsl.component是DSL函数的装饰器，该装饰器返回管道组件。（ContainerOp）。
+dsl.pipeline 是用于返回管道的Python函数的装饰器。
+dsl.python_component 是Python函数的装饰器，用于将管道组件元数据添加到函数对象。
+dsl.types 包含由Kubeflow Pipelines SDK定义的类型列表。类型包括基本类型，如String，Integer，Float，和Bool，以及特定领域的类型，如GCPProjectID和GCRPath。请参阅DSL静态类型检查指南 。
+dsl.ResourceOp 代表管道任务（OP），它可以让你直接操作Kubernetes资源（create，get，apply，...）。
+dsl.VolumeOp 表示创建新PersistentVolumeClaim （PVC）的管道任务（op ）。它旨在使创建PersistentVolumeClaim 快速的常见情况。
+dsl.VolumeSnapshotOp 表示创建新的管道任务（op）VolumeSnapshot。它旨在使创建VolumeSnapshot快速的常见情况。
+dsl.PipelineVolume 表示用于在流水线步骤之间传递数据的卷。ContainerOp可以PipelineVolume通过构造函数的参数 pvolumes或add_pvolumes()方法挂载一个
+
+
+kubectl get PersistentVolumeClaim./volumeop-basic-s7tlb-my-pvc -o jsonpath={.status.capacity.storage} -n kubeflow

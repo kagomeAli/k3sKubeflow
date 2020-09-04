@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: testpipelines-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.0.0, pipelines.kubeflow.org/pipeline_compilation_time: '2020-08-17T20:03:26.364230',
+                pipelines.kubeflow.org/pipeline_spec: '{"description": "shows how to define dsl.Condition.",
+      "name": "Testpipelines"}'}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.0.0}
+spec:
+  entrypoint: testpipelines
+  templates:
+    - name: lessthanzero
+      container:
+        args: [--output_dir, /mnt/1060dir, --data, '{{inputs.parameters.validate-number-less}}']
+        image: yanqin/lessthanzero:v1
+        volumeMounts:
+          - {mountPath: /mnt/1060dir, name: dsl-data}
+      inputs:
+        parameters:
+          - {name: validate-number-less}
+      volumes:
+        - hostPath: {path: /mnt/1060dir}
+          name: dsl-data
+    - name: morethanzero
+      container:
+        args: [--output_dir, /mnt/1060dir, --data, '{{inputs.parameters.validate-number-more}}']
+        image: yanqin/morethanzero:v1
+        volumeMounts:
+          - {mountPath: /mnt/1060dir, name: dsl-data}
+      inputs:
+        parameters:
+          - {name: validate-number-more}
+      volumes:
+        - hostPath: {path: /mnt/1060dir}
+          name: dsl-data
+    - name: testpipelines
+      dag:
+        tasks:
+          - name: lessthanzero
+            template: lessthanzero
+            dependencies: [validate-number]
+            arguments:
+              parameters:
+                - {name: validate-number-less, value: '{{tasks.validate-number.outputs.parameters.validate-number-less}}'}
+          - name: morethanzero
+            template: morethanzero
+            dependencies: [validate-number]
+            arguments:
+              parameters:
+                - {name: validate-number-more, value: '{{tasks.validate-number.outputs.parameters.validate-number-more}}'}
+          - {name: validate-number, template: validate-number}
+    - name: validate-number
+      container:
+        args: [--inputFilename, a.txt, --output_dir, /mnt/1060dir]
+        image: yanqin/validate:v1
+        volumeMounts:
+          - {mountPath: /mnt/1060dir, name: dsl-data}
+      outputs:
+        parameters:
+          - name: validate-number-less
+            valueFrom: {path: /lessFilePath.txt}
+          - name: validate-number-more
+            valueFrom: {path: /moreFilePath.txt}
+        artifacts:
+          - {name: validate-number-less, path: /lessFilePath.txt}
+          - {name: validate-number-more, path: /moreFilePath.txt}
+      volumes:
+        - hostPath: {path: /mnt/1060dir}
+          name: dsl-data
+  arguments:
+    parameters: []
+  serviceAccountName: pipeline-runner
