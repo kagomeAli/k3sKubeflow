@@ -8,13 +8,11 @@ metadata:
 spec:
   ports:
     - name: grpc-tf-serving
-      port: 8501
-      targetPort: 8501
-      nodePort: 30009
+      port: 9000
+      targetPort: 30009
     - name: http-tf-serving
       port: 8500
-      targetPort: 8500
-      nodePort: 30085
+      targetPort: 30085
   selector:
     app: mnist
   type: NodePort
@@ -39,18 +37,23 @@ spec:
         version: v1
     spec:
       containers:
-        - env:
-            - name: rest_api_port
-              value: '8500'
-            - name: port
-              value: '8501'
-            - name: MODEL_NAME
-              value: mnist
-            - name: MODEL_BASE_PATH
-              value: /home/aoi1060/Downloads/pipelines/nfsdata
+        - args:
+            - --port=9000
+            - --rest_api_port=8500
+            - --model_name=mnist
+            - --model_base_path=YOUR_MODEL
+          command:
+            - /usr/bin/tensorflow_model_server
           image: tensorflow/serving:2.2.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            tcpSocket:
+              port: 9000
+          name: mnist
           ports:
-            - containerPort: 8501
+            - containerPort: 9000
             - containerPort: 8500
           resources:
             limits:
@@ -59,23 +62,13 @@ spec:
             requests:
               cpu: "1"
               memory: 1Gi
-          imagePullPolicy: IfNotPresent
-          livenessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 30
-            tcpSocket:
-              port: 8501
-          name: mnist
           volumeMounts:
-            - mountPath: /home/aoi1060/Downloads
-              name: tf-volume
+            - mountPath: /var/config/
+              name: config-volume
       volumes:
-        - name: tf-volume
-          hostPath:
-            path: /home/aoi1060/Downloads
-            type: Directory
-      nodeSelector:
-        name: aoi1060
+        - configMap:
+            name: mnist-v1-config
+          name: config-volume
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule

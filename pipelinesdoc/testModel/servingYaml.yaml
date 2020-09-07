@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mnist
+  name: mnist-v1
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app: mnist
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: mnist
+        version: v1
+    spec:
+      containers:
+        - env:
+            - name: rest_api_port
+              value: '8500'
+            - name: port
+              value: '8501'
+            - name: MODEL_NAME
+              value: saved_model_half_plus_two_cpu
+            - name: MODEL_BASE_PATH
+              value: /home/aoi1060/Downloads/serving/tensorflow_serving/servables/tensorflow/testdata
+          image: tensorflow/serving:2.2.0
+          ports:
+            - containerPort: 8501
+            - containerPort: 8500
+          resources:
+            limits:
+              cpu: "4"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            tcpSocket:
+              port: 8501
+          name: mnist
+          volumeMounts:
+            - mountPath: /home/aoi1060/Downloads/serving
+              name: tf-volume
+      volumes:
+        - name: tf-volume
+          hostPath:
+            path: /home/aoi1060/Downloads/serving
+            type: Directory
+      nodeSelector:
+        name: aoi1060

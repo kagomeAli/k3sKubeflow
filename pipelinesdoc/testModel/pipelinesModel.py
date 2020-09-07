@@ -8,7 +8,7 @@ import kfp.dsl as dsl
 def volumeop_sequential():
     createModel = dsl.ContainerOp(
         name="create_model",
-        image="tensorflow/tensorflow:2.3.0-gpu",
+        image="tensorflow/tensorflow:2.3.0",
         command=["sh", "-c"],
         arguments=["python3 /data/models/dslModel.py"],
         pvolumes={"/data": dsl.PipelineVolume(pvc="hostpath-pvc")}

@@ -43,14 +43,14 @@ def parser(record):
 
 
 if __name__ == '__main__':
-    train_dataset = tf.data.TFRecordDataset(r"./train.tfrecords")
+    train_dataset = tf.data.TFRecordDataset(r"./data/models/train.tfrecords")
     train_dataset = train_dataset.map(parser)
 
     train_dataset = train_dataset.shuffle(buffer_size=10000)
     train_dataset = train_dataset.repeat()
     train_dataset = train_dataset.batch(batch_size=BATCH_SIZE)
 
-    valid_dataset = tf.data.TFRecordDataset("./valid.tfrecords")
+    valid_dataset = tf.data.TFRecordDataset("./data/models/valid.tfrecords")
     valid_dataset = valid_dataset.map(parser)
 
     valid_dataset = valid_dataset.shuffle(buffer_size=500)
@@ -95,4 +95,4 @@ if __name__ == '__main__':
                               validation_data=valid_dataset,
                               validation_steps=VALIDATION_DATA_SIZE // BATCH_SIZE)
 
-    model.save("./01/saved_model", save_format='tf')
+    model.save("./data/models/saved_model/00000123", save_format='tf')
