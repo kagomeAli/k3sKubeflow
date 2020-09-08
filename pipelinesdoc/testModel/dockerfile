@@ -1,6 +1,7 @@
-FROM python:3.6-slim
+FROM yoanlin/opencv-python3:latest
 RUN mkdir -p /app
+RUN pip3 install requests
 ENV APP_HOME /app
 COPY models $APP_HOME
 WORKDIR $APP_HOME
-ENTRYPOINT ["python", "dslModel.py"]
+ENTRYPOINT ["python3", "tfserving_client.py"]

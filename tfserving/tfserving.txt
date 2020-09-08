@@ -52,6 +52,5 @@ kubectl get deploy -n mnist-v1
 i：curl -d '{"instances": [1.0,2.0,5.0]}' -X POST http://localhost:30009/v1/models/mnist:predict
 ii： requests.post(http://localhost:30085/v1/models/object:predict', data=data, headers=headers)
 
-curl -d '{"instances": [1.0,2.0,5.0]}' -X POST http://localhost:8501/v1/models/mnist:predict
 
 /usr/bin/tensorflow_model_server --port=9000 --model_name=modelf-12345 --model_base_path=/model-12345/export/modelf-12345

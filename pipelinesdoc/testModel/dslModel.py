@@ -95,4 +95,4 @@ if __name__ == '__main__':
                               validation_data=valid_dataset,
                               validation_steps=VALIDATION_DATA_SIZE // BATCH_SIZE)
 
-    model.save("./data/models/saved_model/00000123", save_format='tf')
+    model.save("./data/models/mnist/00000123", save_format='tf')

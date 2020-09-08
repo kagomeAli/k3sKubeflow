@@ -5,10 +5,15 @@ from kfp import dsl
     name='Conditional execution pipeline',
     description='Shows how to use dsl.Condition().'
 )
+
+
 def flipcoin_pipeline():
-    dslArgs = dsl.PipelineParam(name='tfma-mode', value='local')
-    print(dslArgs.name)
-    print(dslArgs.value)
+    createModel = dsl.ContainerOp(
+        name="create_model",
+        image="yanqin/request:v1",
+        file_outputs={'output': '/data/file1'},
+        pvolumes={"/data": dsl.PipelineVolume(pvc="hostpath-pvc")}
+    )
 
 
 if __name__ == '__main__':

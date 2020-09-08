@@ -26,6 +26,7 @@ def resourceop_basic():
         k8s_resource=json.loads(_CONTAINER_MANIFEST),
         action='create'
     )
+    print(op)
 
 
 if __name__ == '__main__':

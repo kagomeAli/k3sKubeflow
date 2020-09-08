@@ -12,6 +12,8 @@ def flip_coin_op(train_data):
         file_outputs={'output': '/tmp/output'}
     )
 
+    #PipelineParam对象可以用作管道函数参数，因此它将成为ML Pipelines系统U​​I中显示的管道参数。它也可以代表一个中间组件之间传递的值。
+
 def print_op(msg):
     """Print a message."""
     return dsl.ContainerOp(

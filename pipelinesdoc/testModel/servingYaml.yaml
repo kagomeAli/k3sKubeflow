@@ -24,9 +24,9 @@ spec:
             - name: port
               value: '8501'
             - name: MODEL_NAME
-              value: saved_model_half_plus_two_cpu
+              value: mnist
             - name: MODEL_BASE_PATH
-              value: /home/aoi1060/Downloads/serving/tensorflow_serving/servables/tensorflow/testdata
+              value: /mnt/1060dir/models
           image: tensorflow/serving:2.2.0
           ports:
             - containerPort: 8501
@@ -46,12 +46,12 @@ spec:
               port: 8501
           name: mnist
           volumeMounts:
-            - mountPath: /home/aoi1060/Downloads/serving
+            - mountPath: /mnt/1060dir
               name: tf-volume
       volumes:
         - name: tf-volume
           hostPath:
-            path: /home/aoi1060/Downloads/serving
+            path: /mnt/1060dir
             type: Directory
       nodeSelector:
         name: aoi1060
