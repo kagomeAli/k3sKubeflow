@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: mnist
-  name: mnist-service
+    app: fabric
+  name: fabric-service
   namespace: kubeflow
 spec:
   ports:
@@ -16,17 +16,17 @@ spec:
       targetPort: 8500
       nodePort: 30085
   selector:
-    app: mnist
+    app: fabric
   type: NodePort
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   labels:
-  name: mnist-service
+  name: fabric-service
   namespace: kubeflow
 spec:
-  host: mnist-service
+  host: fabric-service
   subsets:
     - labels:
         version: v1
@@ -36,7 +36,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   labels:
-  name: mnist-service
+  name: fabric-service
   namespace: kubeflow
 spec:
   gateways:
@@ -48,12 +48,12 @@ spec:
         - method:
             exact: POST
           uri:
-            prefix: /tfserving/models/mnist
+            prefix: /tfserving/models/fabric
       rewrite:
-        uri: /v1/models/mnist:predict
+        uri: /v1/models/fabric:predict
       route:
         - destination:
-            host: mnist-service
+            host: fabric-service
             port:
               number: 8500
             subset: v1

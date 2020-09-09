@@ -1,1 +1,25 @@
 tensorflow.python.framework.errors_impl.NotFoundError:
+
+
+
+
+sudo docker rmi 2db043d18ba0
+sudo docker rmi a7770a7b542f
+sudo docker rmi 3b940208d890
+sudo docker rmi e92a6ed2edef
+sudo docker rmi 9d02cf62a49a
+sudo docker rmi 419e703e9a65
+sudo docker rmi ba9e17d69d7c
+sudo docker rmi c717d8c1d200
+sudo docker rmi d6d82e640217
+sudo docker rmi cf48a43ef93c
+sudo docker rmi 18704c8ef4de
+
+sudo docker rm d0fb893a14cc
+sudo docker rm e122bbd9db25
+sudo docker rm 1aa689041a4a
+sudo docker rm 65185cb50930
+sudo docker rm c31aaee2d9a9
+sudo docker rm f4416a5cede3
+
+

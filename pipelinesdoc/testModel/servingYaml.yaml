@@ -2,19 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: mnist
-  name: mnist-v1
+    app: fabric
+  name: fabric-v1
   namespace: kubeflow
 spec:
   selector:
     matchLabels:
-      app: mnist
+      app: fabric
   template:
     metadata:
       annotations:
         sidecar.istio.io/inject: "true"
       labels:
-        app: mnist
+        app: fabric
         version: v1
     spec:
       containers:
@@ -24,7 +24,7 @@ spec:
             - name: port
               value: '8501'
             - name: MODEL_NAME
-              value: mnist
+              value: fabric
             - name: MODEL_BASE_PATH
               value: /mnt/1060dir/models
           image: tensorflow/serving:2.2.0
@@ -44,7 +44,7 @@ spec:
             periodSeconds: 30
             tcpSocket:
               port: 8501
-          name: mnist
+          name: fabric
           volumeMounts:
             - mountPath: /mnt/1060dir
               name: tf-volume

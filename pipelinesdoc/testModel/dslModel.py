@@ -12,6 +12,16 @@ from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import concatenate
 from tensorflow.keras.activations import relu, softmax
+import os, shutil
+
+content = '0'
+if os.path.exists("./data/models/fabric/00000123"):
+    shutil.rmtree('./data/models/fabric/00000123')
+    content = '1'
+
+with open('./data/serving_status','a+') as f:
+    f.write(content)
+
 
 TRAINING_DATA_SIZE = 32374
 VALIDATION_DATA_SIZE = 3598
@@ -20,6 +30,8 @@ IMAGE_SIZE = (128, 128)
 CLASSES = 5
 BATCH_SIZE = 32
 MAX_EPOCH = 10
+
+
 
 
 def parser(record):
@@ -95,4 +107,4 @@ if __name__ == '__main__':
                               validation_data=valid_dataset,
                               validation_steps=VALIDATION_DATA_SIZE // BATCH_SIZE)
 
-    model.save("./data/models/mnist/00000123", save_format='tf')
+    model.save("./data/models/fabric/00000123", save_format='tf')

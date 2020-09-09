@@ -25,14 +25,16 @@ sudo docker ps -a
 kubectl -n kubeflow edit deploy mnist-v1
 
 删除：
-kubectl delete pod mnist-v1-557f6854fd-gbh8r -n kubeflow
+kubectl delete pod mnist-v1-557f6854fd-l797f -n kubeflow
 
 详情：
-kubectl describe pod mnist-v1-557f6854fd-gbh8r -n kubeflow
+kubectl describe pod fabric-v1-5c9599694b-wxdbv -n kubeflow
 
 日志：
-kubectl logs mnist-v1-557f6854fd-gbh8r -n kubeflow
+kubectl logs fabric-v1-5c9599694b-wxdbv -n kubeflow
 
+
+pod/fabric-v1-5c9599694b-wxdbv
 pod/ml-pipeline-ui-79c86d6b59-sfbxd 
 
 查看pv pvc

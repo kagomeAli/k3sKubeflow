@@ -1,8 +1,8 @@
 有了Dockerfile，创建镜像
 docker build -t 192.168.1.1:5000/validate:v1 .
-sudo docker build -t yanqin/request:v1 .
+sudo docker build -t yanqin/fabric:v1 .
 
-sudo docker push yanqin/request:v1
+sudo docker push yanqin/fabric:v2
 创建容器
 docker run -itd --name=tomcate -p 8080:8080 \
     -v /app/webapps/:/usr/local/apache-tomcat-8.0.46/webapps/ \
