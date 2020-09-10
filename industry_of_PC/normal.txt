@@ -1,0 +1,111 @@
+12、use-case
+13、activity diagram : 活动图主要由活动和动作构成，也可以支持分支选择、迭代、并行
+    flow
+    control
+    type:
+  activity
+  pin 输入输出参数
+ssh
+
+
+17、阻塞（Blocking）和非阻塞（Non-Blocking）
+竞争条件（race condition），它旨在描述一个系统或者进程的输出依赖于不受控制的事件出现顺序或者出现时机。此词源自于两个信号试着彼此竞争，来影响谁先输出
+deadlock 双方都在等待对方停止运行，以获取系统资源，但是没有一方提前退出时，就称为死锁。在多任务操作系统中，操作系统为了协调不同行程，能否获取系统资源时，为了让系统运作，必须要解决这个问题
+
+concurrency models 多线程设计模式
+
+！petri net： place、transition、arc、token
+
+18、UCCU kacker 的成员之一
+A、
+自动驾驶
+物联网
+工控OT
+
+自动驾驶
+需要GPS、GSM（3G、4G），IVI
+1、无线电通讯、
+2、身份伪造
+RFID 明文传输
+价格决定质量
+
+物联网
+1、智能家居
+
+B、渗透测试
+web/host
+
+病毒测试
+不同的 data structure
+混淆技术、加强技术（字符串混淆、流程混淆）
+
+26 虚拟化
+作用：分配资源 + 资源隔离
+容错：服务切换
+容错技术：mirror guest 会被备份机限制/ via network占CPU
+
+cuju feature: 备份时间短，占CPU不高，
+hypervisor（管理员）
+减少transfer time，snapshot time， reduce extra copy；分页传输减少传输次数
+1、reduce extra copy： 收集different，
+
+
+同步：会产生握手的情况，request收到后，才会写下一步
+block server architecture 异步接受消息，类似多个promise.then()
+block server设计概念callback control 有quota限制（最多接受多少），保证写入 与callback 稳定输入输出的速度
+
+group fault-tolerance
+任何备份周期，会照成延迟
+虚拟机组队 让输出的data 没有太多限制
+
+容错失效时，统一回到上一次备份
+
+dynamric resync( remove + add member)
+发生错误的机器移除，保证其他机器正常运作 ，等到其他机器运作完成是，发生错误的机器使用新的机器进行备份
+cuju demo
+
+31 云端边缘云算系统软体发展趋势
+1、基础架构的必要性
+分散式无人值守边缘运算解决方案
+
+multi-tenant cloud computing （资源切割，）
+openstack on open infrastruture
+nova
+
+
+9.1 虚拟化行动桌面计数开发经验分享
+虚拟化你的智慧手机
+安全，可控、隐私、便利的平衡。
+ 公务与家庭死党购物金融 安全隔离，管理可控
+智慧手机在云端，小程序，手机应用app
+
+
+9.2
+AOI 智慧工厂的眼睛
+AI视觉化的检测，
+
+纺织胚布瑕疵检测
+传统： 耗人力。聘不到人，遗漏瑕疵，检测速度慢。
+自动化检验：不同的品需要调整参数（无法应对少量多样的趋势），overkill 太高（80%～90%）
+            参数调整耗时。
+AI模型建构配置与评估结果
+瑕疵的定义
+
+
+autoEncoder 比较特别cnn
+把input 传入encode压缩为festure，然后decoder还原。
+encode（max-pooling）
+decode（de-convalution，Up-sampling）
+
+自动光学检测：量测、辨别、验证、瑕疵侦测 辨识、定位
+
+
+
+
+
+
+
+
+
+
+

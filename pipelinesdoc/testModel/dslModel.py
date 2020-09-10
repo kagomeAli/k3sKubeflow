@@ -19,7 +19,7 @@ if os.path.exists("./data/models/fabric/00000123"):
     shutil.rmtree('./data/models/fabric/00000123')
     content = '1'
 
-with open('./data/serving_status','a+') as f:
+with open('./data/serving_status','w+') as f:
     f.write(content)
 
 

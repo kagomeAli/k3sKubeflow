@@ -28,13 +28,13 @@ kubectl -n kubeflow edit deploy mnist-v1
 kubectl delete pod mnist-v1-557f6854fd-l797f -n kubeflow
 
 详情：
-kubectl describe pod fabric-v1-5c9599694b-wxdbv -n kubeflow
+kubectl describe pod lab-v1-6cc94f675c-8xg4g -n kubeflow
 
 日志：
-kubectl logs fabric-v1-5c9599694b-wxdbv -n kubeflow
+kubectl logs lab-v1-6cc94f675c-8xg4g -n kubeflow
 
-
-pod/fabric-v1-5c9599694b-wxdbv
+pod/lab-v1-6cc94f675c-8xg4g
+pod/lab-v1-6cc94f675c-8xg4g
 pod/ml-pipeline-ui-79c86d6b59-sfbxd 
 
 查看pv pvc

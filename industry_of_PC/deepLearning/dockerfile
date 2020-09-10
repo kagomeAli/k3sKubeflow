@@ -1,0 +1,8 @@
+FROM gcc:10.2
+ENV APP_HOME /
+COPY hello.c $APP_HOME
+RUN g++ hello.c -o test
+CMD [ "./test" ]
+
+# docker build -t yanqin/gcc:lab04 .
+# docker run -it --name containerName yanqin/gcc:lab04
