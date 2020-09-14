@@ -99,6 +99,26 @@ decode（de-convalution，Up-sampling）
 
 自动光学检测：量测、辨别、验证、瑕疵侦测 辨识、定位
 
+0907
+
+
+lab2
+apt-get install virt-manager
+
+
+
+CPU需要支持
+KVM 硬体虚拟化
+
+
+egrep -c '(vmx|svm)' /proc/cpuinfo
+会返回一个数值， 大于0 支持，0不支持
+
+
+标题：verify installation
+sudo adduser `id labtwo` kvm
+sudo adduser `labtwo` libvirtd
+virsh list --all
 
 
 

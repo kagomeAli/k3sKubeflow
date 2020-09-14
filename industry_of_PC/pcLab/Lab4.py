@@ -283,4 +283,4 @@ class MNIST_DCGAN(object):
 # 实例化网络的类
 fabric_dcgan = MNIST_DCGAN()
 # 训练模型
-fabric_dcgan.train(train_steps=10000, batch_size=256, save_interval=500)
+fabric_dcgan.train(train_steps=2000, batch_size=256, save_interval=500)
