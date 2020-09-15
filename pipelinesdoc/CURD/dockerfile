@@ -1,0 +1,17 @@
+FROM python:3.6-alpine
+RUN apk add py-configobj libusb py-pip musl-dev python3-dev gcc linux-headers
+RUN pip install scp cython paramiko
+ENV APP_HOME /app
+COPY pyfile $APP_HOME
+WORKDIR $APP_HOME
+ENTRYPOINT ["python3", "scp2ipc.py"]
+
+
+sudo docker build -t yanqin/fabric:v1 .
+sudo docker push yanqin/gcc:lab04
+
+sudo docker run -e "ssh -p21000" instrumentisto/rsync-ssh \
+        ./models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric/
+
+
+rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 ./data/models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
