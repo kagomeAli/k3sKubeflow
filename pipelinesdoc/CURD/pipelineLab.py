@@ -20,9 +20,9 @@ def volumeop_sequential():
 
     moveModel = dsl.ContainerOp(
         name="Move model to IPC",
-        image="python:alpine3.6",
+        image="eeacms/rsync:latest",
         command=["sh", "-c"],
-        arguments=["python3 /data/pyfile/scp2ipc.py"],
+        arguments=["python /data/pyfile/scp2ipc.py"],
         pvolumes={"/data": dsl.PipelineVolume(pvc="fabric-pvc")}
     )
 

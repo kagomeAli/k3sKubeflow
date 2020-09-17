@@ -1,17 +1,28 @@
 cd ~/Downloads/fabricModel
 
-/home/aoi1060/Downloads/fabricModel/
+import json
+import kfp
+import kfp.dsl as dsl
 
-/data/models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric')
-sudo docker run --rm -i -e "ssh -p21000" instrumentisto/rsync-ssh \
-    rsync -avz /models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
+client = kfp.Client()
+my_experiment = client.create_experiment(name='demo')
 
-    sudo docker run \
-        -v ./models/fabric/:nvidia@140.115.53.52:/home/nvidia/Downloads/fabric \
-        -p 2222:22 -d bboehmke/rssh \
-        foo:123:1001
+my_run = client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf',job_name='my-pipeline',pipeline_id='5b964de5-60ad-406a-b6d9-dfe7e7c3012c', version_id='5b964de5-60ad-406a-b6d9-dfe7e7c3012c')
 
-
+client.list_experiments()
 
 
-         /home/aoi1060/Downloads/fabricModel/pyfile/scp2ipc.py
+client.delete_experiment('75c0dab5-1b11-4544-9638-8129928bc35e')
+client.delete_experiment('5a00f267-cbb8-4f4d-a1f4-fc1e5bcde23e')
+client.delete_experiment('d299370d-c452-4310-9242-93feea2488a5')
+
+client.delete_experiment('d299370d-c452-4310-9242-93feea2488a5')
+client.delete_experiment('d299370d-c452-4310-9242-93feea2488a5')
+client.delete_experiment('d299370d-c452-4310-9242-93feea2488a5')
+client.delete_experiment('d299370d-c452-4310-9242-93feea2488a5')
+
+id 5bcd3410-6d30-4d93-97cc-666c36a86cb6
+d299370d-c452-4310-9242-93feea2488a5
+5a00f267-cbb8-4f4d-a1f4-fc1e5bcde23e
+75c0dab5-1b11-4544-9638-8129928bc35e
+  pipelineLab.py.tar.gz

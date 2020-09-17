@@ -3,5 +3,5 @@ pipelines/
 serving/
 normal/机器参数.txt
 
-network_file_system/
+# network_file_system/
 .idea/

@@ -54,3 +54,17 @@ ii： requests.post(http://localhost:30085/v1/models/object:predict', data=data,
 
 
 /usr/bin/tensorflow_model_server --port=9000 --model_name=modelf-12345 --model_base_path=/model-12345/export/modelf-12345
+
+
+Step 1. (Cloud端) 使用者開啟影像標註工具, 修改影像標記後​
+1、生成新的资料包
+Step 2. (Cloud端) 使用者點選”重新訓練模型”​
+2、对新的资料进行学习，训练模型
+Step 3. (Cloud端) 影像標註工具GUI呼叫Kubeflow Pipeline執行預設好的流程​
+3、pipelins 生成对应的workflow
+Step 4. (Cloud端) Kubeflow Pipeline執行 模型訓練 後, 產生新的AI模型Saved_model.pb​
+4、部署新的tfserving服务
+Step 5. (Cloud端) 如何把AI模型Saved_model.pb 傳送到對應的Edge端?​
+5、确认model达到预期，输送到IPC
+Step 6. (Edge端) Cloud端的Kubeflow Pipeline如何執行Edge端的TFServing?
+6、IPC使用新的model部署tfserving

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mnist
+  name: mnist-v1
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app: mnist
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: mnist
+        version: v1
+    spec:
+      containers:
+        - args:
+            scp -P 21000 -r ./models/fabric nvidia@140.115.53.52:/home/nvidia/Downloads/test/
+            - --port=21000
+            - --r=./models/fabric nvidia@140.115.53.52:/home/nvidia/Downloads/test/
+          command:
+            - /usr/bin/rsync
+          image: tensorflow/serving:2.2.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            tcpSocket:
+              port: 9000
+          name: mnist
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - mountPath: /var/config/
+              name: config-volume
+      volumes:
+        - configMap:
+            name: mnist-v1-config
+          name: config-volume
