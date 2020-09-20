@@ -1,5 +1,49 @@
 cd ~/Downloads/fabricModel
 
+
+/home/aoi1060/Downloads/fabricModel/models/fabric/
+
+nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
+
+rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 /home/aoi1060/Downloads/fabricModel/models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
+
+cp -rf /home/aoi1060/Downloads/fabricModel/models/fabric/ nvidia@140.115.53.52:21000/home/nvidia/Downloads/fabric
+
+
+
+
+sudo docker run \
+    -v /home/aoi1060/Downloads/fabricModel/models/fabric/:'nvidia@140.115.53.52:/home/nvidia/Downloads/fabric' \
+    -v /my/authorized_keys:/home/aoi1060/.ssh/authorized_keys \
+    -p 21000:22 \
+    axiom/rsync-server
+
+rsync -av -e "ssh -i /your/private.key -p 9000 -l root" /your/folder/ localhost:/data
+
+
+
+
+
+rsync avP --exclude /Users/$USER/test/data /Users/$USER/test container:/test
+
+sudo docker run -p 8090:80 --name rsync_move_file eeacms/rsync bash
+sudo docker exec rsync_move_file rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 ./models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
+
+
+
+sudo docker run -v /Users/$USER/test:/temp-test -dit -p 8090:80 --name container repository:dockerfile bash
+sudo docker exec container rsync -avP --exclude /temp-test/data /temp-test/ /test/
+
+
+
+
+sudo docker run --rm eeacms/rsync \
+    rsync -e "ssh -i /home/aoi1060/.ssh/authorized_keys -p 21000" -auvz --progress --delete --bwlimit=2048 /home/aoi1060/Downloads/fabricModel/models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
+
+
+
+
+
 import json
 import kfp
 import kfp.dsl as dsl

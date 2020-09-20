@@ -1,0 +1,60 @@
+NFS即网络文件系统Network File System
+功能是在允许客户端主机可以像访问本地存储一样通过网络访问服务端文件。
+/mnt/1060dir 192.168.1.60(rw,sync,no_subtree_check) 192.168.1.62(rw,sync,no_subtree_check)
+
+/home/aoi1060/Downloads/pipelines/nfsdata
+
+sudo netstat -tupl
+sudo netstat -anp | grep 30009
+sudo fuser -v -n tcp 30009
+sudo kill -s 9 19232(PID 进程号)
+
+
+/home/aoi1060/Downloads/pipelines/nfsdata 192.168.31.0/24(rw,sync,no_all_squash,no_subtree_check)
+/home/aoi1060/Downloads/pipelines/homework 192.168.31.0/24(rw,sync,no_all_squash,no_subtree_check)
+
+/usr/bin/env scp -P 21000 -r /mnt/1060dir/models/fabric nvidia@140.115.53.52:/home/nvidia/Downloads
+
+
+nfs-pvc-deploy.yaml
+
+#创建要共享的目录
+mkdir /home/aoi1060/Downloads/pipelines/nfsdata -p
+#编辑NFS配置并加入以下内容
+sudo nano /etc/exports
+/data/nfs 192.168.1.241(rw,sync,no_subtree_check)
+#载入配置
+sudo exportfs -rv
+
+mount -t nfs -o vers=4.0 192.168.1.241:/home/aoi1060/Downloads/pipelines/nfsdata /home/aoi1060/Downloads/pipelines/nfsdata
+
+sudo /etc/init.d/nfs-kernel-server restart
+
+•/home/aoi1060/Downloads/pipelines/nfsdata：NFS服务要共享的目录
+•192.168.1.241：允许访问NFS服务器的网段，也可以写 * ，表示所有地址都可以访问NFS服务
+•rw：访问到此目录的服务器都具备读写权限
+•sync：数据同步写入内存和硬盘
+•no_all_squash：所有用户对根目录具备完全管理访问权限
+•no_subtree_check：不检查父目录的权限
+
+#查看NFS配置是否生效
+cat /var/lib/nfs/etab
+
+showmount -e 192.168.1.241
+showmount -e 192.168.1.62
+
+systemctl start rpcbind.service
+systemctl status rpcbind.service
+systemctl enable rpcbind.service
+
+systemctl start nfs.service
+systemctl enable nfs.service
+systemctl status nfs.service
+
+
+sudo service nfs-server start
+
+
+
+kubectl log deployment labfour-deployment
+
