@@ -31,7 +31,7 @@ kubectl apply pod mnist-v1-557f6854fd-l797f -n kubeflow
 kubectl describe pod hackmd-665f9784df-5zvkd -n kubeflow
 
 日志：
-kubectl logs my-labfour-5d8f8646f4-gn4wb -n kubeflow
+kubectl logs image-api-6fff9ff7-gs562 -n kubeflow
 
 
 查看pv pvc
@@ -210,13 +210,13 @@ kubectl create -f aaa.yaml
 kubectl delete -f aaa.yaml
 
 #获取pod（这里以kube-proxy-7gkfk为例，kube-proxy-7gkfk是pod名字）详细信息：
-kubectl describe po kube-proxy-7gkfk -n kube-system
+kubectl describe po image-api-6fff9ff7-5tlgv -n kube-system
 
 #获取某rc（这里以mysql为例，mysql是rc名字）详细信息：
 kubectl describe rc mysql
 
 #查看某pod（这里以etcd-see-k8s-master1为例，etcd-see-k8s-master1为pod名字）日志：
-kubectl logs etcd-see-k8s-master1 -n kube-system
+kubectl logs image-api-6fff9ff7-5tlgv -n kube-system
 
 #查看帮助
 kubectl help

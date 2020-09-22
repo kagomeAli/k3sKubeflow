@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fabric-svc
+  name: fabric-service
+spec:
+  ports:
+    - name: grpc-tf-serving
+      port: 8501
+      targetPort: 8501
+      nodePort: 30086   #the nodePort for user calling
+    - name: http-ty-serving
+      port: 8500
+      targetPort: 8500
+      nodePort: 30085
+  selector:
+    app: tfserving
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tfserving
+  name: tfserving-fabric
+spec:
+  selector:
+    matchLabels:
+      app: tfserving
+  template:
+    metadata:
+      labels:
+        app: tfserving
+        version: v1
+    spec:
+      containers:
+        - image: emacski/tensorflow-serving:2.2.0-linux_arm
+          env:
+            - name: MODEL_NAME
+              value: fabric   #your model name
+          ports:
+            - containerPort: 8500
+            - containerPort: 8501
+          imagePullPolicy: IfNotPresent
+          name: fabric
+          volumeMounts:
+            - mountPath: /models/fabric/  #/models/'your model name'
+              name: tf-volume
+      volumes:
+        - name: tf-volume
+          hostPath:
+            path: /home/nvidia/Downloads/fabric/  #your model dir path in your host
+            type: Directory

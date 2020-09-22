@@ -24,4 +24,4 @@ def demo_model():
 
 if __name__ == "__main__":
     import kfp.compiler as compiler
-    compiler.Compiler().compile(demo_model, __file__ + ".tar.gz")
+    compiler.Compiler().compile(demo_model, __file__ + ".yaml")

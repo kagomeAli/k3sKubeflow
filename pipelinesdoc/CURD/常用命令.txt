@@ -5,10 +5,12 @@ cd ~/Downloads/fabricModel
 
 nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
 
-rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 /home/aoi1060/Downloads/fabricModel/models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
+rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 /home/aoi1060/Downloads/0_100.jpg nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
 
 cp -rf /home/aoi1060/Downloads/fabricModel/models/fabric/ nvidia@140.115.53.52:21000/home/nvidia/Downloads/fabric
 
+
+http://localhost:30086/v1/models/fabric:predict
 
 
 
@@ -55,7 +57,7 @@ my_run = client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf
 
 client.list_experiments()
 
-
+kfp_server_api.api_client.delete_experiment
 client.delete_experiment('75c0dab5-1b11-4544-9638-8129928bc35e')
 client.delete_experiment('5a00f267-cbb8-4f4d-a1f4-fc1e5bcde23e')
 client.delete_experiment('d299370d-c452-4310-9242-93feea2488a5')
@@ -70,3 +72,36 @@ d299370d-c452-4310-9242-93feea2488a5
 5a00f267-cbb8-4f4d-a1f4-fc1e5bcde23e
 75c0dab5-1b11-4544-9638-8129928bc35e
   pipelineLab.py.tar.gz
+
+
+
+
+~/Downloads/tfserving/x86/test-deploy.yaml
+
+
+
+sudo docker rmi
+sudo docker rmi e1a97d193cdf
+sudo docker rmi 603726b4b946
+sudo docker rmi 330a65dcb53a
+sudo docker rmi 8f17df710bab
+sudo docker rmi 0219f5dafe12
+sudo docker rmi bd9285a892fd
+sudo docker rmi 965d7041399e
+sudo docker rmi 699b78c6929b
+sudo docker rmi dd8c3eada1a4
+sudo docker rmi 883b77d99429
+sudo docker rmi 27dcd999eb6c
+sudo docker rmi 390f0a355b5d
+sudo docker rmi 2a5344950336
+sudo docker rmi 4a45aaa38838
+sudo docker rmi 953499ea4b4a
+
+sudo docker rmi 9972b4d5afcc
+sudo docker rmi bc55580d3f0f
+sudo docker rmi c98b15b4dc77
+sudo docker rm bc55580d3f0f
+sudo docker rm 9972b4d5afcc
+sudo docker rm 953499ea4b4a
+sudo docker rm df0cfc429aba
+sudo docker rm 29b9e1d8c85e

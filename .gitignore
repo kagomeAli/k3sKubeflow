@@ -2,6 +2,6 @@ kfserving/
 pipelines/
 serving/
 normal/机器参数.txt
-
+serving_dist/
 # network_file_system/
 .idea/

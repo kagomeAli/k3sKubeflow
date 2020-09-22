@@ -1,17 +1,37 @@
 # requestPipeline
 FROM python:3.6.7
-MAINTAINER niyanqin@gmail.com
-ADD . /pyfile
+MAINTAINER niyanqin1022@gmail.com
+RUN mkdir /pyfile
+COPY requestPipeline.py /pyfile
 RUN pip install --upgrade pip
-RUN pip install flask
+RUN pip install flask flask_cors kfp kfp-server-api
 WORKDIR /pyfile
 ENTRYPOINT ["python3", "/pyfile/requestPipeline.py"]
+
+# 10.43.234.44:8882
+sudo docker build -t yanqin/request_pipeline:v1 .
+sudo docker push yanqin/request_pipeline:v1
+sudo docker run -it --name pipelines_api --rm -p 8882:8882 yanqin/request_pipeline:v1
+
+
+# requestPipeline
+FROM jwiii/kfp-runner:latest
+MAINTAINER niyanqin1022@gmail.com
+COPY requestPipeline.py ./
+RUN pip install --upgrade pip
+RUN pip install flask flask_cors kfp kfp-server-api
+WORKDIR ./
+ENTRYPOINT ["python3", "./requestPipeline.py"]
+
+sudo docker build -t yanqin/images_api:v1 .
+sudo docker push yanqin/images_api:v1
+sudo docker run -it --name images_api --rm -p 8882:8882 yanqin/images_api:v1
 
 
 # paramikoMove
 
 FROM python:3.6.7
-MAINTAINER niyanqin@gmail.com
+MAINTAINER niyanqin1022@gmail.com
 ADD . /pyfile
 RUN pip install --upgrade pip
 RUN pip install paramiko
@@ -27,16 +47,35 @@ sudo docker run -it --name paramiko_move_file --rm -p 8803:8803 yanqin/paramiko_
 
 
 # paramikoMove
-
 FROM python:3.6.7
 MAINTAINER niyanqin1022@gmail.com
 RUN mkdir /pyfile
-COPY paramikodir.py /pyfile
+COPY ./pyfile/paramikodir.py /pyfile
 RUN pip install --upgrade pip
 RUN pip install paramiko
 WORKDIR /pyfile
 ENTRYPOINT ["python3", "/pyfile/paramikodir.py"]
 
+sudo docker build -t yanqin/paramiko_move:v1 .
+sudo docker push yanqin/paramiko_move:v1
+sudo docker run -it --name paramiko_move_file --rm -p 8803:8803 yanqin/paramiko_move:v1
+
+
+# scpMove
+FROM python:3.6.7
+MAINTAINER niyanqin1022@gmail.com
+RUN mkdir /pyfile
+COPY scp2ipc.py /pyfile
+RUN pip install --upgrade pip
+RUN pip install paramiko
+WORKDIR /pyfile
+ENTRYPOINT ["python3", "/pyfile/scp2ipc.py"]
+
+
+
+sudo docker build -t yanqin/paramiko_scp:v1 .
+sudo docker push yanqin/paramiko_scp:v1
+sudo docker run -it --name paramiko_move_file --rm -p 8803:8803 yanqin/paramiko_scp:v1
 
 
 sudo docker build -t yanqin/move_pipeline:v1 .
@@ -44,14 +83,13 @@ sudo docker build -t yanqin/move_pipeline:v1 .
 sudo docker push yanqin/gcc:lab04
 
 
-sudo docker run -p 8802:8802 --name pipelines_api yanqin/request_pipeline:v1
-
-sudo docker run -it --name pipelines_api --rm -p 8802:8802 yanqin/request_pipeline:v1
-
-rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 ./models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
-sudo docker run --rm -v blobstorage:/data/ eeacms/rsync \
-              rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 ./models/fabric/ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
-
-
-
-
+sudo docker rmi 11c6e5fd966a
+sudo docker rmi 5c1b8bfae1d1
+sudo docker rmi 215236b0f8d3
+sudo docker rmi b3636e266cac
+sudo docker rmi 5c1b8bfae1d1
+sudo docker rmi 215236b0f8d3
+sudo docker rmi 6bac929fbd81
+sudo docker rmi 1675c684384c
+sudo docker rmi 08a8a96b0693
+sudo docker rmi 111fb69e7e7c
