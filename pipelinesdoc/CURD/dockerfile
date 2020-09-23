@@ -8,24 +8,9 @@ RUN pip install flask flask_cors kfp kfp-server-api
 WORKDIR /pyfile
 ENTRYPOINT ["python3", "/pyfile/requestPipeline.py"]
 
-# 10.43.234.44:8882
 sudo docker build -t yanqin/request_pipeline:v1 .
 sudo docker push yanqin/request_pipeline:v1
 sudo docker run -it --name pipelines_api --rm -p 8882:8882 yanqin/request_pipeline:v1
-
-
-# requestPipeline
-FROM jwiii/kfp-runner:latest
-MAINTAINER niyanqin1022@gmail.com
-COPY requestPipeline.py ./
-RUN pip install --upgrade pip
-RUN pip install flask flask_cors kfp kfp-server-api
-WORKDIR ./
-ENTRYPOINT ["python3", "./requestPipeline.py"]
-
-sudo docker build -t yanqin/images_api:v1 .
-sudo docker push yanqin/images_api:v1
-sudo docker run -it --name images_api --rm -p 8882:8882 yanqin/images_api:v1
 
 
 # paramikoMove
@@ -44,7 +29,17 @@ sudo docker push yanqin/paramiko_move:v1
 sudo docker run -it --name paramiko_move_file --rm -p 8803:8803 yanqin/paramiko_move:v1
 
 
+FROM nginx
+MAINTAINER niyanqin1022@gmail.com
+# 将dist文件中的内容复制到 /usr/share/nginx/html/ 这个目录下面
+COPY dist/  /usr/share/nginx/html/
 
+sudo docker build -t yanqin/image_labeling:v1 .
+# -p ：配置端口映射，格式是外部访问端口：容器内端口
+# -d ：后台运行
+# --name : 给容器取名
+# 最后有 2 个 gentle-vue,前面一个是给容器取的名字，后面一个是使用的镜像的名字
+ docker run -p 3000:80 -d --name gentle-vue gentle-vue
 
 # paramikoMove
 FROM python:3.6.7
