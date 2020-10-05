@@ -47,6 +47,7 @@ def check():
 
 
 # http://0.0.0.0:8882/getList
-
+Github157519
+kaya2210@qq.com
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port=8882,debug=True)
