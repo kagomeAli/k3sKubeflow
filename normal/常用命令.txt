@@ -25,7 +25,7 @@ sudo docker ps -a
 kubectl -n kubeflow edit deploy mnist-v1
 
 删除：
-kubectl apply pod mnist-v1-557f6854fd-l797f -n kubeflow
+kubectl delete pod mnist-v1-557f6854fd-l797f -n kubeflow
 
 详情：
 kubectl describe pod image-api-677bc96d74-z68xh -n kubeflow

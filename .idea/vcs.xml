@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/codimd-k8s" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deeplab_v3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/image_labeling_tool" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/kfserving/kfserving" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/kubeflow-manifests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pipelines/kubeflow-mnist" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/serving" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/serving/tensorflow_serving/test/kubeflow-manifests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/serving_dist" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tensorflow-mnist" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tmp/tfserving/serving" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tmp/tfserving/serving/tensorflow_serving/test/kubeflow-manifests" vcs="Git" />
+  </component>
+</project>

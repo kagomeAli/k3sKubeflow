@@ -8,3 +8,6 @@ nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
 rsync -e "ssh -p21000" -auvz --progress --delete --bwlimit=2048 /home/aoi1060/Downloads/0_100.jpg nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
 
 cp -rf /home/aoi1060/Downloads/fabricModel/models/fabric/ nvidia@140.115.53.52:21000/home/nvidia/Downloads/fabric
+
+
+kubectl logs tfserving-fabric-847b5bcd7c-22sgv
