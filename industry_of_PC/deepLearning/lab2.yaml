@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-labfour
+  namespace: kubeflow
+  labels:
+    run: my-labfour
+spec:
+  type: NodePort
+  ports:
+    - port: 4040
+      nodePort: 30040
+      targetPort: 4040
+      protocol: TCP
+      name: http
+  selector:
+    run: my-labfour
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-labfour
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      run: my-labfour
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: my-labfour
+    spec:
+      containers:
+        - name: labfourhttps
+          image: yanqin/gcc:lab04
+          command: [ "/bin/bash", "-c", "./test" ]
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4040

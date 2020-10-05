@@ -6,3 +6,5 @@ CMD [ "./test" ]
 
 # docker build -t yanqin/gcc:lab04 .
 # docker run -it --name containerName yanqin/gcc:lab04
+
+ssh://git@gitlab.insnergy.com:30001/iii_ncu/other/image_labeling_tool.git
