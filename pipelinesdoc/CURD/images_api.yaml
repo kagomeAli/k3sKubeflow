@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: imagesapi
-          image: yanqin/request_pipeline:v2
+          image: yanqin/request_pipeline:v1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8882
