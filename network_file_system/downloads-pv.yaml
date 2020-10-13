@@ -4,7 +4,7 @@ metadata:
   name: downloads-pv
   namespace: kubeflow
 spec:
-  storageClassName: manual
+  storageClassName: downloads
   capacity:
     storage: 10Gi
   accessModes:

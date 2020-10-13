@@ -44,14 +44,14 @@ def parser(record):
 
 
 if __name__ == '__main__':
-    train_dataset = tf.data.TFRecordDataset(r"./data/database/train.tfrecords")
+    train_dataset = tf.data.TFRecordDataset(r"/home/aoi1060/Downloads/fabricModel/database/train.tfrecords")
     train_dataset = train_dataset.map(parser)
 
     train_dataset = train_dataset.shuffle(buffer_size=10000)
     train_dataset = train_dataset.repeat()
     train_dataset = train_dataset.batch(batch_size=BATCH_SIZE)
 
-    valid_dataset = tf.data.TFRecordDataset("./data/database/valid.tfrecords")
+    valid_dataset = tf.data.TFRecordDataset("/home/aoi1060/Downloads/fabricModel/database/valid.tfrecords")
     valid_dataset = valid_dataset.map(parser)
 
     valid_dataset = valid_dataset.shuffle(buffer_size=500)
@@ -96,4 +96,4 @@ if __name__ == '__main__':
                               validation_data=valid_dataset,
                               validation_steps=VALIDATION_DATA_SIZE // BATCH_SIZE)
 
-    model.save("./data/models/fabric/00000123", save_format='tf')
+    model.save("/home/aoi1060/Downloads/fabricModel/models/fabric/00000123", save_format='tf')

@@ -3,24 +3,24 @@ import kfp
 import kfp.dsl as dsl
 
 @dsl.pipeline(
-    name="create models and move",
+    name="demo",
     description="......"
 )
 
 def demo_model():
-    createModel = dsl.ContainerOp(
-        name="create label",
+    createLabel = dsl.ContainerOp(
+        name="Upzip file and Maker image",
         image="yanqin/tensorflow-opencv:v1",
         command=["sh", "-c"],
         arguments=["python3 /home/aoi1060/Downloads/fabricModel/pyfile/createLabel.py"],
-        pvolumes={"/home/aoi1060/Downloads/fabricModel": dsl.PipelineVolume(pvc="fabric-pvc")}
+        pvolumes={"/home/aoi1060/Downloads": dsl.PipelineVolume(pvc="downloads-pvc"),}
     )
     createModel = dsl.ContainerOp(
         name="create model",
         image="tensorflow/tensorflow:2.3.0",
         command=["sh", "-c"],
-        arguments=["python3 /data/pyfile/createModel.py"],
-        pvolumes={"/data": dsl.PipelineVolume(pvc="fabric-pvc")}
+        arguments=["python3 /home/aoi1060/Downloads/fabricModel/pyfile/createModel.py"],
+        pvolumes={"/home/aoi1060/Downloads": createLabel.pvolume}
     )
 
     moveModel = dsl.ContainerOp(
@@ -28,7 +28,6 @@ def demo_model():
         image="yanqin/paramiko_move:v1",
         pvolumes={"/home/aoi1060/Downloads/fabricModel": createModel.pvolume}
     )
-
 
 if __name__ == "__main__":
     import kfp.compiler as compiler
