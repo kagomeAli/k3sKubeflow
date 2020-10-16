@@ -28,11 +28,15 @@ kubectl -n kubeflow edit deploy mnist-v1
 kubectl delete pod mnist-v1-557f6854fd-l797f -n kubeflow
 
 详情：
-kubectl describe pod image-api-677bc96d74-z68xh -n kubeflow
+kubectl describe pod image-api-57f467f447-pr8fb -n kubeflow
+kubectl describe pod image-api-798f755bdd-8dm8c -n kubeflow
 
 日志：
-kubectl logs image-api-677bc96d74-z68xh -n kubeflow
+kubectl logs image-api-57f467f447-pr8fb -n kubeflow
+kubectl logs image-api-798f755bdd-8dm8c  -n kubeflow
 
+查看暴露的IP
+kubectl service flask-app-service --url
 
 查看pv pvc
 kubectl get pv
