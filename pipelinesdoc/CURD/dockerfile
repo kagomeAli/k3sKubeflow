@@ -2,17 +2,19 @@
 FROM python:3.6.7
 MAINTAINER niyanqin1022@gmail.com
 RUN mkdir /pyfile
-COPY requestPipeline.py /pyfile
+COPY flaskPip.py /pyfile
 RUN pip install --upgrade pip
 RUN pip install flask flask_cors kfp kfp-server-api
 WORKDIR /pyfile
-ENTRYPOINT ["python3", "/pyfile/requestPipeline.py"]
+ENTRYPOINT ["python3", "/pyfile/flaskPip.py"]
 
-sudo docker build -t yanqin/request_pipeline:v1 .
-sudo docker push yanqin/request_pipeline:v1
-sudo docker run -it --name pipelines_api --rm -p 8882:8882 yanqin/request_pipeline:v1
+sudo docker build -t yanqin/request_pipeline:v6 .
+sudo docker push yanqin/request_pipeline:v6
+sudo docker pull yanqin/request_pipeline:v6
+sudo docker rmi yanqin/request_pipeline:v6
+sudo docker run -it --name pipelines_api --rm -p 8882:8882 yanqin/request_pipeline:v2
 
-curl http://10.43.103.164:8882/getList
+curl http://127.0.0.1:8882/getList
 # paramikoMove
 
 FROM python:3.6.7
@@ -35,6 +37,9 @@ MAINTAINER niyanqin1022@gmail.com
 COPY dist/  /usr/share/nginx/html/
 
 sudo docker build -t yanqin/image_labeling:v1 .
+sudo docker rmi yanqin/image_labeling:v1
+sudo docker kill image_label
+sudo docker rm image_label
 # -p ：配置端口映射，格式是外部访问端口：容器内端口
 # -d ：后台运行
 # --name : 给容器取名
@@ -145,3 +150,8 @@ RUN apt-get install -y libsm6
 RUN apt-get install -y libxrender1
 RUN apt-get install -y libxext-dev
 RUN apt-get install -y libgl1-mesa-glx
+
+
+github.com,13.250.177.223 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+[140.115.53.52]:20002 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKOwSgavBJWbAqQIKP3eEop5zwKi5fFmilp3WvjvAoA4h87SW9ZZgiM4cMp1j3jg/snwXpt+/hKOE3Q9pFFf+jI=
+[140.115.53.52]:21000 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKJyUbwEibl7RPQ27w/YJpa3pLa6E6UD0YC94oi+A6R0fHT13WbfPoL40j1L87ER8n+z9dP2/vdmwAvf/gP6CJU=

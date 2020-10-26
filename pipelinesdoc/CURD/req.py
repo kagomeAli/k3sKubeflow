@@ -1,7 +1,6 @@
 import json
 from flask import Flask, request
 from flask_cors import *
-import datetime
 import time
 import kfp
 import kfp.dsl as dsl
@@ -14,10 +13,6 @@ app = Flask(__name__)
 @app.route("/")
 @cross_origin()
 def index():
-    # result = client.list_experiments()
-    # client.list_pipelines()
-    # pipelineLab.py.yaml
-    #client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf',job_name='fabricModel2', pipeline_package_path='./pipelineLab.py.yaml')
     data = request.args.get("id")
     pipename = request.args.get("pipename")
     pipeid = request.args.get("pipeid")
@@ -47,29 +42,39 @@ def getlist():
     result = client.list_pipelines().to_dict()
     return result
 
-@app.route("/allexp")
+@app.route("/lastexp")
 @cross_origin()
 def lastexp():
-    # result = client.list_experiments().to_dict()
-    # result = client.list_runs(experiment_id='75c0dab5-1b11-4544-9638-8129928bc35e').to_dict()
-    # result = client.list_runs(sort_by='name asc', page_size=2, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()
-    length = client.list_runs(page_size=1, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()['total_size']
-    data = client.list_runs(page_size=length, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()['runs']
-    data.reverse()
-    result = {'pipelines': data }
-    return result
+    result = client.list_runs(page_size=1, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()['total_size']
+    lastresult = result - 1
+    result2 = client.list_runs(page_size=result, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()['runs'][lastresult]
+    return result2
 
 @app.route("/upzip")
 @cross_origin()
 def upzip():
-    result= {'status': '200', 'result': False}
-    ticks = time.time()
-    new_ticks = 'upzip_' + str(ticks).replace('.', '')
-    pipeid = '4739bec0-d464-4091-ad56-6c0fccddc597'
-    data = client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf',job_name=new_ticks, pipeline_id=pipeid,version_id=pipeid)
-    print(data)
+    unzip_path = '/home/aoi1060/Downloads/fabricModel/labels/'
+    zip_file_name = '/home/aoi1060/Downloads/labels-json.zip'
+    result= {'status': '400', 'return_info': '文件不存在', 'result': False}
+    r = zipfile.is_zipfile(zip_file_name)
+    file = []
+    if r:
+        # 删除文件夹里的文件
+        for root, dirs, files in os.walk(unzip_path):
+            print(files)
+            for file in files:
+                os.remove(unzip_path + file)
+         # 解压
+        fz = zipfile.ZipFile(zip_file_name, 'r')
+        for file in fz.namelist():
+            fz.extract(file, unzip_path)
+        # 解压后，删除压缩档案
+        os.remove(zip_file_name)
+        result= {'status': '200', 'return_info': '解压成功', 'result': False}
+    else:
+        print('This is not zip')
     return result
 
-#curl http://10.43.235.160:8882/upzip
+# http://10.43.235.160:8882/
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port=8882,debug=True)
