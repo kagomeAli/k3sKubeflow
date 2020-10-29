@@ -65,7 +65,7 @@ def upzip():
     result= {'status': '200', 'result': False}
     ticks = time.time()
     new_ticks = 'upzip_' + str(ticks).replace('.', '')
-    pipeid = '4739bec0-d464-4091-ad56-6c0fccddc597'
+    pipeid = '0a81b7a0-d0cf-4923-9725-dbbd7b3635b0'
     data = client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf',job_name=new_ticks, pipeline_id=pipeid,version_id=pipeid)
     print(data)
     return result

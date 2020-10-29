@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: imagesflask
-          image: yanqin/request_pipeline:v6
+          image: yanqin/request_pipeline:v3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8882

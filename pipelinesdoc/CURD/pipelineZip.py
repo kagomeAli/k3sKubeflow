@@ -10,7 +10,7 @@ import kfp.dsl as dsl
 def demo_model():
     upZipFile = dsl.ContainerOp(
         name="Upzip file",
-        image="tensorflow/tensorflow:2.3.0",
+        image="yanqin/tensorflow-opencv:v1",
         command=["sh", "-c"],
         arguments=["python3 /home/aoi1060/Downloads/fabricModel/pyfile/upzipFile.py"],
         pvolumes={"/home/aoi1060/Downloads": dsl.PipelineVolume(pvc="downloads-pvc"),}
