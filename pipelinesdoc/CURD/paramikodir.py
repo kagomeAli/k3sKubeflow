@@ -123,9 +123,6 @@ class SSH(object):
         try:
             sftp = paramiko.SFTPClient.from_transport(self.t)
 
-            #if remote_dir[-1] == "/":
-            #    remote_dir = remote_dir[0:-1]
-
             all_files = self._get_all_files_in_local_dir(local_dir)
             for file in all_files:
 
@@ -154,19 +151,9 @@ if __name__ == "__main__":
     ssh = SSH(ip='140.115.53.52', port=21000, username='nvidia', password='NviDia!@#$')
     ssh.connect()
     #连接远程服务器
-
     cmd = 'ls -lh'
     ssh.execute_cmd(cmd)
     # 执行命令
-
-    # remotefile, local_file = 'xxx', 'xxx'
-    # ssh.sftp_get(remotefile, local_file)
-    # 下载文件
-
-    # /home/aoi1060/Downloads/fabricModel/models/fabric/
-
-    # nvidia@140.115.53.52:/home/nvidia/Downloads/fabric
-
     remotedir, localdir = '/home/nvidia/Downloads/fabric/', '/home/aoi1060/Downloads/fabricModel/models/fabric/'
     ssh.sftp_put_dir(localdir, remotedir)
     # 上传文件夹
