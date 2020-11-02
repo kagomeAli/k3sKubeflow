@@ -1,0 +1,46 @@
+// @import "~bootstrap/scss/bootstrap"; //已使用 admiin-lte 免載入
+// @import "~admin-lte/dist/css/adminlte.css";
+@import "~admin-lte/build/scss/AdminLTE.scss";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+// #app {
+//     font-family: Avenir, Helvetica, Arial, sans-serif;
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+//     text-align: center;
+//     color: #2c3e50;
+//   }
+  
+//   #nav {
+//     padding: 30px;
+  
+//     a {
+//       font-weight: bold;
+//       color: #2c3e50;
+  
+//       &.router-link-exact-active {
+//         color: #42b983;
+//       }
+//     }
+// }
+
+body {
+  font-family: -apple-system, 'Noto Sans TC', BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.right-menu {
+  // border-right: solid;
+  // border-right-color: gray;
+  top: 57px;
+  height: 100%;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
