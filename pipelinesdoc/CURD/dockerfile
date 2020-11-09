@@ -1,18 +1,16 @@
 # requestPipeline
 FROM python:3.6.7
-MAINTAINER niyanqin1022@gmail.com
-RUN mkdir /pyfile
-COPY requestPipeline.py /pyfile
+COPY requestPipeline.py ./
 RUN pip install --upgrade pip
 RUN pip install flask flask_cors kfp kfp-server-api
 WORKDIR /pyfile
-ENTRYPOINT ["python3", "/pyfile/requestPipeline.py"]
+ENTRYPOINT ["python3", "/requestPipeline.py"]
 
-sudo docker build -t yanqin/request_pipeline:v3 .
-sudo docker push yanqin/request_pipeline:v3
-sudo docker pull yanqin/request_pipeline:v3
-sudo docker rmi yanqin/request_pipeline:v3
-sudo docker run -it --name pipelines_api --rm -p 8882:8882 yanqin/request_pipeline:v2
+sudo docker build -t yanqin/request_pipeline:v2 .
+# sudo docker push yanqin/request_pipeline:v1
+# sudo docker pull yanqin/request_pipeline:v1
+# sudo docker rmi yanqin/request_pipeline:v1
+
 
 # paramikoMove
 FROM python:3.6.7
@@ -24,8 +22,7 @@ WORKDIR /pyfile
 ENTRYPOINT ["python3", "/pyfile/paramikoMove.py"]
 
 sudo docker build -t yanqin/paramiko_move:v1 .
-sudo docker push yanqin/paramiko_move:v1
-sudo docker run -it --name paramiko_move_file --rm -p 8803:8803 yanqin/paramiko_move:v1
+# sudo docker push yanqin/paramiko_move:v1
 
 # yanqin/image_labeling:v1
 FROM nginx
@@ -34,9 +31,9 @@ MAINTAINER niyanqin1022@gmail.com
 COPY dist/  /usr/share/nginx/html/
 
 sudo docker build -t yanqin/image_labeling:v1 .
-sudo docker rmi yanqin/image_labeling:v1
-sudo docker kill image_label
-sudo docker rm image_label
+# sudo docker rmi yanqin/image_labeling:v1
+# sudo docker kill image_label
+# sudo docker rm image_label
 # -p ：配置端口映射，格式是外部访问端口：容器内端口
 # -d ：后台运行
 # --name : 给容器取名
@@ -78,5 +75,41 @@ RUN apt-get install -y libxrender1
 RUN apt-get install -y libxext-dev
 RUN apt-get install -y libgl1-mesa-glx
 
-
 sudo docker build -t yanqin/tensorflow-opencv:v1 .
+
+
+# yanqin/tensorflow-gpu-opencv:v1
+FROM ubuntu:16.04
+RUN  apt-get update
+RUN  apt-get upgrade -y
+# Install python3
+RUN  apt-get install -y python3
+# Install pip
+RUN apt-get install -y wget vim
+RUN wget -O /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py
+RUN python3 /tmp/get-pip.py
+RUN pip install --upgrade pip
+# Install tensorflow
+RUN pip install -U tensorflow-gpu
+# Install ffmpeg
+RUN  apt-get install -y ffmpeg
+# Install moviepy
+RUN  pip install -U moviepy
+# Install cmake
+RUN apt-get update
+RUN apt-get install -y build-essential
+RUN apt-get install -y cmake
+# Install OpenCV
+RUN apt-get install -y unzip
+RUN wget -P /usr/local/src/ https://github.com/opencv/opencv/archive/3.4.1.zip
+RUN cd /usr/local/src/ && unzip 3.4.1.zip && rm 3.4.1.zip
+RUN cd /usr/local/src/opencv-3.4.1/ && mkdir build
+RUN cd /usr/local/src/opencv-3.4.1/build && cmake -D CMAKE_INSTALL_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local/ .. && make -j4 && make install
+# Install opencv-python
+RUN pip install opencv-python
+RUN apt-get install -y libsm6
+RUN apt-get install -y libxrender1
+RUN apt-get install -y libxext-dev
+RUN apt-get install -y libgl1-mesa-glx
+
+sudo docker build -t yanqin/tensorflow-gpu-opencv:v1 .

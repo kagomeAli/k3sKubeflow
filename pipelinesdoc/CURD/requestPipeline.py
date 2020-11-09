@@ -8,6 +8,15 @@ import kfp.dsl as dsl
 import os
 import zipfile
 
+config = {
+    # 身份验证ID
+    "id": 'aoi!)^)',
+    # pipeline 运行后所在erperiment id
+    "experiment_id": "663212b7-12c9-430c-92ff-25d1bdc26ccf",
+    # 解压的pipeline的ID
+    "unzip_pipeid": "0a81b7a0-d0cf-4923-9725-dbbd7b3635b0"
+}
+
 client = kfp.Client()
 app = Flask(__name__)
 
@@ -17,7 +26,7 @@ def index():
     # result = client.list_experiments()
     # client.list_pipelines()
     # pipelineLab.py.yaml
-    #client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf',job_name='fabricModel2', pipeline_package_path='./pipelineLab.py.yaml')
+    #client.run_pipeline(config["experiment_id"],job_name='fabricModel2', pipeline_package_path='./pipelineLab.py.yaml')
     data = request.args.get("id")
     pipename = request.args.get("pipename")
     pipeid = request.args.get("pipeid")
@@ -26,12 +35,12 @@ def index():
         'data': 'error',
     }
     print('接收请求')
-    if data == 'aoi!)^)':
+    if data == config['id']:
         ticks = time.time()
         print('当前时间戳： ', ticks)
         new_ticks = pipename + str(ticks).replace('.', '')
         print(new_ticks)
-        result = client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf',job_name=new_ticks, pipeline_id=pipeid,version_id=pipeid)
+        result = client.run_pipeline(config["experiment_id"],job_name=new_ticks, pipeline_id=pipeid,version_id=pipeid)
         print(result)
         result = {
            'status': "200",
@@ -49,27 +58,27 @@ def getlist():
 
 @app.route("/allexp")
 @cross_origin()
-def lastexp():
+def allexp():
     # result = client.list_experiments().to_dict()
     # result = client.list_runs(experiment_id='75c0dab5-1b11-4544-9638-8129928bc35e').to_dict()
-    # result = client.list_runs(sort_by='name asc', page_size=2, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()
-    length = client.list_runs(page_size=1, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()['total_size']
-    data = client.list_runs(page_size=length, experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf').to_dict()['runs']
+    # result = client.list_runs(sort_by='created_at', page_size=2, config["experiment_id"]).to_dict()
+    length = client.list_runs(page_size=1, config["experiment_id"]).to_dict()['total_size']
+    data = client.list_runs(page_size=length, config["experiment_id"]).to_dict()['runs']
     data.reverse()
     result = {'pipelines': data }
     return result
 
-@app.route("/upzip")
+@app.route("/unzip")
 @cross_origin()
-def upzip():
+def unzip():
     result= {'status': '200', 'result': False}
     ticks = time.time()
-    new_ticks = 'upzip_' + str(ticks).replace('.', '')
-    pipeid = '0a81b7a0-d0cf-4923-9725-dbbd7b3635b0'
-    data = client.run_pipeline(experiment_id='663212b7-12c9-430c-92ff-25d1bdc26ccf',job_name=new_ticks, pipeline_id=pipeid,version_id=pipeid)
+    new_ticks = 'unzip_' + str(ticks).replace('.', '')
+    data = client.run_pipeline(config["experiment_id"],job_name=new_ticks, pipeline_id=config["unzip_pipeid"],version_id=config["unzip_pipeid"])
+    data = client.run_pipeline(config["experiment_id"],job_name=new_ticks, pipeline_id=config["unzip_pipeid"],version_id=config["unzip_pipeid"])
     print(data)
     return result
 
-#curl http://10.43.235.160:8882/upzip
+#curl http://127.0.0.1:30082/allexp
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port=8882,debug=True)

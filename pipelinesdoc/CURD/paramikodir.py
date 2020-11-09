@@ -3,11 +3,26 @@ import paramiko
 import traceback
 import os
 
+config = {
+    # ssh IP
+    "ssh_ip": "140.115.53.52",
+    # ssh 端口
+    "ssh_port": 21000,
+    # ssh 用户名
+    "ssh_username": "nvidia",
+    # ssh 密码
+    "ssh_password": "NviDia!@#$",
+    # model 所在本地路径
+    "local_dir": "/home/aoi1060/Downloads/fabricModel/models/fabric/",
+    # IPC 端文件路径
+    "remote_dir": "/home/nvidia/Downloads/fabric/"
+}
+
 '''
 使用paramiko类实现ssh的连接登陆,以及远程文件的上传与下载, 基本远程命令的实现等
 '''
 class SSH(object):
-    def __init__(self, ip, port=21000, username=None, password=None, timeout=30):
+    def __init__(self, ip, port, username=None, password=None, timeout=30):
         self.ip = ip
         self.port = port
         self.username = username
@@ -22,7 +37,7 @@ class SSH(object):
     def _password_connect(self):
 
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.ssh.connect(hostname=self.ip, port=21000, username=self.username, password=self.password)
+        self.ssh.connect(hostname=self.ip, port=self.port, username=self.username, password=self.password)
 
         # sptf 远程传输的连接
         self.t.connect(username=self.username, password=self.password)
@@ -33,7 +48,7 @@ class SSH(object):
         self.pkey = paramiko.RSAKey.from_private_key_file('/home/aoi1060/.ssh/id_rsa', )
         # self.ssh.load_system_host_keys()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.ssh.connect(hostname=self.ip, port=21000, username=self.username, pkey=self.pkey)
+        self.ssh.connect(hostname=self.ip, port=self.port, username=self.username, pkey=self.pkey)
 
         self.t.connect(username=self.username, pkey=self.pkey)
 
@@ -148,13 +163,13 @@ if __name__ == "__main__":
     #ssh nvidia@140.115.53.52 -p 21000
     #NviDia!@#$
     # 创建一个ssh类对象
-    ssh = SSH(ip='140.115.53.52', port=21000, username='nvidia', password='NviDia!@#$')
+    ssh = SSH(ip=config['ssh_ip'], port=config['ssh_port'], username=config['ssh_username'], password=config['ssh_password'])
     ssh.connect()
     #连接远程服务器
     cmd = 'ls -lh'
     ssh.execute_cmd(cmd)
     # 执行命令
-    remotedir, localdir = '/home/nvidia/Downloads/fabric/', '/home/aoi1060/Downloads/fabricModel/models/fabric/'
+    remotedir, localdir = config['remote_dir'], config['local_dir']
     ssh.sftp_put_dir(localdir, remotedir)
     # 上传文件夹
     ssh.close()

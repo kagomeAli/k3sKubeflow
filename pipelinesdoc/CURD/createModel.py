@@ -22,6 +22,14 @@ CLASSES = 5
 BATCH_SIZE = 32
 MAX_EPOCH = 10
 
+config = {
+    # train 数据库所在文件路径
+    "TFRecordDataset_train": r"/home/aoi1060/Downloads/fabricModel/database/train.tfrecords",
+    # train 数据库所在文件路径
+    "TFRecordDataset_valid": "/home/aoi1060/Downloads/fabricModel/database/valid.tfrecords",
+    # 训练结束 model 保存路径
+    "model_save_dir": "/home/aoi1060/Downloads/fabricModel/models/fabric/00000123",
+}
 
 def parser(record):
     # define your tfrecord again. Remember that you saved your image as a string.
@@ -44,14 +52,14 @@ def parser(record):
 
 
 if __name__ == '__main__':
-    train_dataset = tf.data.TFRecordDataset(r"/home/aoi1060/Downloads/fabricModel/database/train.tfrecords")
+    train_dataset = tf.data.TFRecordDataset(config['TFRecordDataset_train'])
     train_dataset = train_dataset.map(parser)
 
     train_dataset = train_dataset.shuffle(buffer_size=10000)
     train_dataset = train_dataset.repeat()
     train_dataset = train_dataset.batch(batch_size=BATCH_SIZE)
 
-    valid_dataset = tf.data.TFRecordDataset("/home/aoi1060/Downloads/fabricModel/database/valid.tfrecords")
+    valid_dataset = tf.data.TFRecordDataset(config['TFRecordDataset_valid'])
     valid_dataset = valid_dataset.map(parser)
 
     valid_dataset = valid_dataset.shuffle(buffer_size=500)
@@ -96,4 +104,4 @@ if __name__ == '__main__':
                               validation_data=valid_dataset,
                               validation_steps=VALIDATION_DATA_SIZE // BATCH_SIZE)
 
-    model.save("/home/aoi1060/Downloads/fabricModel/models/fabric/00000123", save_format='tf')
+    model.save(config['model_save_dir'], save_format='tf')

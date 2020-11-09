@@ -2,18 +2,27 @@ import json
 import kfp
 import kfp.dsl as dsl
 
+config = {
+    # 解压文件 依赖的image
+    "depend_image": "yanqin/tensorflow-opencv:v1",
+    # 解压文件路径
+    "unzipPath": "/home/aoi1060/Downloads/fabricModel/pyfile/unzipFile.py",
+    # 解压文件依赖的PVC
+    "pvolumePath": "/home/aoi1060/Downloads",
+}
+
 @dsl.pipeline(
-    name="demo",
+    name="unzip",
     description="......"
 )
 
 def demo_model():
-    upZipFile = dsl.ContainerOp(
+    unZipFile = dsl.ContainerOp(
         name="Upzip file",
-        image="yanqin/tensorflow-opencv:v1",
+        image=config["depend_image"],
         command=["sh", "-c"],
-        arguments=["python3 /home/aoi1060/Downloads/fabricModel/pyfile/upzipFile.py"],
-        pvolumes={"/home/aoi1060/Downloads": dsl.PipelineVolume(pvc="downloads-pvc"),}
+        arguments=["python3 " + config["unzipPath"]],
+        pvolumes={config["pvolumePath"]: dsl.PipelineVolume(pvc="downloads-pvc")}
     )
 
 if __name__ == "__main__":

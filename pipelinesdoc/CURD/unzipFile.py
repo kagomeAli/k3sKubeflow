@@ -5,6 +5,21 @@ import json
 import cv2
 import numpy
 
+config = {
+    # 解压后文件保存路径
+    "unzip_path": "/home/aoi1060/Downloads/fabricModel/labels/",
+    # 需解压的文件
+    "zip_file_name": "/home/aoi1060/Downloads/labels-json.zip",
+    # 需匹配的图像文件夹
+    "images_path": "/home/aoi1060/Downloads/fabricModel/images/",
+    # 保存后label array 名称
+    "label_file": "label_data.npy",
+    # 保存后image array 名称
+    "image_file": "img_data.npy",
+    # label 与 图像匹配后生成新的数据，存储的地址
+    "data_save_path": "/home/aoi1060/Downloads/fabricModel/database/",
+}
+
 def LabInfo(flags, num):
     for i in flags:
         if flags[i] == True:
@@ -38,19 +53,19 @@ def createLabel2Img(labelList, labDir, imageList, imgDir, saveDir):
     # 存解析后的影像文件
     print("Save the resolved image file")
     print(img_data)
-    numpy.save(saveDir + "img_data.npy",img_data)
+    numpy.save(saveDir + config["image_file"],img_data)
     # 存解析后的label文件
     print("Save the resolved label file")
     print(label_data)
-    numpy.save(saveDir + "label_data.npy",label_data)
+    numpy.save(saveDir + config["label_file"],label_data)
 
 def unzip_file():
-    unzip_path = '/home/aoi1060/Downloads/fabricModel/labels/'
-    zip_file_name = '/home/aoi1060/Downloads/labels-json.zip'
+    unzip_path = config["unzip_path"]
+    zip_file_name = config["zip_file_name"]
     # 图片文件夹
-    imagesPath = '/home/aoi1060/Downloads/fabricModel/images/'
+    imagesPath = config["images_path"]
     # 解析后的文件保存地址
-    savePath = '/home/aoi1060/Downloads/fabricModel/database/'
+    savePath = config["data_save_path"]
     result= {'status': '400', 'return_info': 'file doesn\'t exist', 'result': False}
     r = zipfile.is_zipfile(zip_file_name)
     print('zip_file_name is exist')
