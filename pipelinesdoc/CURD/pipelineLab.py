@@ -1,6 +1,7 @@
 import json
 import kfp
 import kfp.dsl as dsl
+import kfp.compiler as compiler
 
 config = {
     # 创建model python的文件路径
@@ -34,5 +35,4 @@ def demo_model():
     )
 
 if __name__ == "__main__":
-    import kfp.compiler as compiler
     compiler.Compiler().compile(demo_model, __file__ + ".yaml")
