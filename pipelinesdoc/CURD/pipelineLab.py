@@ -4,14 +4,14 @@ import kfp.dsl as dsl
 import kfp.compiler as compiler
 
 config = {
-    # 创建model python的文件路径
-    "modelPath": "/home/aoi1060/Downloads/fabricModel/pyfile/createModel.py",
-    # 创建model依赖的PVC
-    "pvolumePath": "/home/aoi1060/Downloads",
-    # 创建model依赖的Images
-    "model_depend_image": "yanqin/tensorflow-opencv:v1",
-    # 将文件移动到IPC端依赖的Images
-    "move_depend_image": "yanqin/paramiko_move:v1",
+    #創建model python的檔案路徑
+    "modelPath"："/home/aoi1060/Downloads/fabricModel/pyfile/createModel.py",
+    #創建model依賴的PVC
+    "pvolumePath"："/home/aoi1060/Downloads",
+    #創建model依賴的Images
+    "model_depend_image"："tensorflow/tensorflow:2.2.1-gpu-py3",
+    #將檔案移動到IPC端依賴的Images
+    "move_depend_image"："yanqin/paramiko_move:v1",
 }
 
 @dsl.pipeline(

@@ -4,12 +4,12 @@ import kfp.dsl as dsl
 import kfp.compiler as compiler
 
 config = {
-    # 解压文件 依赖的image
-    "depend_image": "yanqin/tensorflow-opencv:v1",
-    # 解压文件路径
-    "unzipPath": "/home/aoi1060/Downloads/fabricModel/pyfile/unzipFile.py",
-    # 解压文件依赖的PVC
-    "pvolumePath": "/home/aoi1060/Downloads",
+    #解壓檔案依賴的image
+    "depend_image"："yanqin/tensorflow-opencv:v1",
+    #解壓檔案路徑
+    "unzipPath"："/home/aoi1060/Downloads/fabricModel/pyfile/unzipFile.py",
+    #解壓檔案依賴的PVC
+    "pvolumePath"："/home/aoi1060/Downloads",
 }
 
 @dsl.pipeline(

@@ -1,0 +1,7 @@
+# requestPipeline
+FROM python:3.6.7
+COPY requestPipeline.py ./
+RUN pip install --upgrade pip
+RUN pip install flask flask_cors kfp kfp-server-api
+WORKDIR /pyfile
+ENTRYPOINT ["python3", "/requestPipeline.py"]

@@ -9,12 +9,12 @@ import os
 import zipfile
 
 config = {
-    # 身份验证ID
-    "id": 'aoi!)^)',
-    # pipeline 运行后所在erperiment id
-    "experiment_id": "663212b7-12c9-430c-92ff-25d1bdc26ccf",
-    # 解压的pipeline的ID
-    "unzip_pipeid": "0a81b7a0-d0cf-4923-9725-dbbd7b3635b0"
+    #身份驗證ID
+    "id"：'aoi!)^)',
+    # pipeline運行後所在erperiment id
+    "experiment_id"："663212b7-12c9-430c-92ff-25d1bdc26ccf",
+    #解壓的pipeline的ID
+    "unzip_pipeid"："0a81b7a0-d0cf-4923-9725-dbbd7b3635b0"
 }
 
 client = kfp.Client()
@@ -61,9 +61,9 @@ def getlist():
 def allexp():
     # result = client.list_experiments().to_dict()
     # result = client.list_runs(experiment_id='75c0dab5-1b11-4544-9638-8129928bc35e').to_dict()
-    # result = client.list_runs(sort_by='created_at', page_size=2, config["experiment_id"]).to_dict()
-    length = client.list_runs(page_size=1, config["experiment_id"]).to_dict()['total_size']
-    data = client.list_runs(page_size=length, config["experiment_id"]).to_dict()['runs']
+    # result = client.list_runs(sort_by='created_at', page_size=2, experiment_id=config["experiment_id"]).to_dict()
+    length = client.list_runs(page_size=1, experiment_id=config["experiment_id"]).to_dict()['total_size']
+    data = client.list_runs(page_size=length, experiment_id=config["experiment_id"]).to_dict()['runs']
     data.reverse()
     result = {'pipelines': data }
     return result

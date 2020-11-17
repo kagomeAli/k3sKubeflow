@@ -1,0 +1,8 @@
+# paramikoMove
+FROM python:3.6.7
+MAINTAINER niyanqin1022@gmail.com
+ADD . /pyfile
+RUN pip install --upgrade pip
+RUN pip install paramiko
+WORKDIR /pyfile
+ENTRYPOINT ["python3", "/pyfile/paramikodir.py"]
