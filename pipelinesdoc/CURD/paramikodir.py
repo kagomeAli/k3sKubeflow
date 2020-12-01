@@ -5,17 +5,17 @@ import os
 
 config = {
     # ssh IP
-    "ssh_ip": "140.115.53.52",
-    # ssh 端口
-    "ssh_port": 21000,
-    # ssh 用户名
-    "ssh_username": "nvidia",
-    # ssh 密码
-    "ssh_password": "NviDia!@#$",
-    # model 所在本地路径
-    "local_dir": "/home/aoi1060/Downloads/fabricModel/models/fabric/",
-    # IPC 端文件路径
-    "remote_dir": "/home/nvidia/Downloads/fabric/"
+    "ssh_ip"："140.115.53.52",
+    # ssh埠
+    "ssh_port"：21000,
+    # ssh用戶名
+    "ssh_username"："nvidia",
+    # ssh密碼
+    "ssh_password"："NviDia!@#$",
+    # model所在本地路徑
+    "local_dir"："/home/aoi1060/Downloads/fabricModel/models/fabric/",
+    # IPC端檔案路徑
+    "remote_dir"："/home/nvidia/Downloads/fabric/"
 }
 
 '''

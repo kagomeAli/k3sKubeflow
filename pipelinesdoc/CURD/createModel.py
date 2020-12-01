@@ -99,8 +99,8 @@ if __name__ == '__main__':
     model.compile(loss=tf.keras.losses.categorical_crossentropy, optimizer=optimizer, metrics=['accuracy'])
 
     train_history = model.fit(train_dataset,
-                              epochs=MAX_EPOCH,
-                              steps_per_epoch=TRAINING_DATA_SIZE // BATCH_SIZE,
+                              epochs=MAX_EPOCH, # 10
+                              steps_per_epoch=TRAINING_DATA_SIZE // BATCH_SIZE, # 32374 // 32
                               validation_data=valid_dataset,
                               validation_steps=VALIDATION_DATA_SIZE // BATCH_SIZE)
 

@@ -19,3 +19,18 @@ Ignore above cudart dlerror if you do not have a GPU set up on your machine.
 Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
 failed call to cuInit: UNKNOWN ERROR (303)
 no NVIDIA GPU device is present: /dev/nvidia0 does not exist
+
+config = {
+    #解壓後檔案保存路徑
+    "unzip_path"："/home/aoi1060/Downloads/fabricModel/labels/",
+    #需解壓的檔案
+    "zip_file_name"："/home/aoi1060/Downloads/labels-json.zip",
+    #需匹配的影像資料夾
+    "images_path"："/home/aoi1060/Downloads/fabricModel/images/",
+    #保存後label array名稱
+    "label_file"："label_data.npy",
+    #保存後image array名稱
+    "image_file"："img_data.npy",
+    # label與圖像匹配後生成新的數據,存儲的地址
+    "data_save_path"："/home/aoi1060/Downloads/fabricModel/database/",
+}
